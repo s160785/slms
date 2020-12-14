@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% load bootstrap4 %} {% block baseheader %}
+{%endblock %} {% block content %}
+<style>
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-top: 15%;
+    flex-direction: column;
+  }
+</style>
+<div class="title">
+  <h1 style="font-family: 'Exo 2'">STUDENT LEAVE MANAGEMENT SYSYTEM</h1>
+</div>
+<div class="container">
+  <h2 align="center"><b>Forgot password</b></h2>
+  <div align="center">
+    {% if messages %} {% for m in messages %}
+    <p class="warning">{{m}}</p>
+    <p>Enter the otp:</p>
+    <form>
+      <input id="otp" style="line-height: 29px" />
+    </form>
+    <p>
+      <b>Note:</b>The otp you enter here should match exactly to the otp that is
+      sent to your rguktsklm mail
+    </p>
+    {% endfor %} {% else %} {% if error %}
+    <p class="warning">{{error}}</p>
+    {% endif %}
+    <p>Enter your Id no:</p>
+    <form>
+      <input name="email" style="line-height: 29px" />&nbsp
+      <a href="Forgotpassword"
+        ><button class="btn btn-primary">Send OTP</button></a
+      >
+    </form>
+    <p>
+      <b>Note:</b>An otp will be sent to your rguktsklm mail .So, make sure you
+      have your rguktsklm mail logged in with you and no other person has access
+      to it.
+    </p>
+    {% endif %}
+  </div>
+</div>
+{% load static %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    $("#otp").on("change keyup paste click", function () {
+      if ($("#otp").val().length == 6) {
+        var url_mask = '{% url "forgotpassword" 1234 %}'.replace(
+          /1234/,
+          $(this).val()
+        );
+        location.replace(url_mask);
+      }
+    });
+  });
+</script>
+{% endblock %}

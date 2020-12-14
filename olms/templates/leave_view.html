@@ -1,0 +1,149 @@
+{% extends 'base.html' %} 
+{% load bootstrap4 %}
+{% load index %}
+{% load static %}
+{% block header %}
+  <li class="nav-item active">
+    <a class="nav-link btn " href="#"
+      ><span class="glyphicon glyphicon-user">&thinsp;</span> Team</a
+    >
+  </li>
+
+  <li class="nav-item active">
+    <a class="nav-link btn " href="/logout"
+      ><span class="glyphicon glyphicon-log-out">&thinsp;</span> LogOut</a
+    >
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link btn  adminid" href="#">
+      <span style="font-size: 20px"> {{user}}</span></a
+    >
+  </li>
+</ul>
+{% endblock %}
+
+{% block content %} 
+<div class="container">
+  <form>
+    <h3>
+      Leave Applied by <span id="Username"><b>{{pi.full_name }} </b></span
+      ><span id="userid">( {{leave.user.id}} )
+						{% if leave.user.gender == 'male' %}
+						<i class="fa fa-male"></i>
+						{% else %}
+						<i class="fa fa-female"></i>
+						{% endif %}
+        </span>
+    </h3>
+    <div>
+        <h3  style='display:inline-block'><b>Reason:</b></h3>
+        <h4  style='display:inline-block'>{{leave.reason|capfirst}}</h4>
+    </div>
+    <div>
+      <label for="Description"><b>Description:</b></label>
+      <p id="Description">{{leave.description}}{% lorem 4 b random %}</p>
+    </div>
+    {% if leave.proof %}
+    <div>
+      <label for="Proof">Proof:</label>
+      <div style='overflow:auto;height:400px'>
+      <embed
+        src="{{leave.proof.url}}"
+        alt="Proof"
+        width="100%"
+        style="object-fit:cover"></embed>
+        </div>
+    </div>
+    {% endif %}
+    <h4><b>Remark:</b></h4>
+    {% with 'granted rejected pending' as list %}
+    {% if leave.status in list.split %}
+    <div class='addon' onclick='add(1)' id='1' data-value='Proof must be provided'>Proof must be provided <i class="fa fa-plus" aria-hidden="true" id='add1'></i></i>
+    </div>
+    <div class='addon' onclick='add(2)' id='2' data-value='Proof is not readable'>Proof is not readable <i class="fa fa-plus" aria-hidden="true" id='add2'></i><br>
+    </div>
+    <form><textarea style='resize:none;width:100%' id='input' placeholder='Type your remark here'></textarea><br></form>
+    {% else %}
+    <p>{{leave.remark}}</p>
+    {% endif %}
+    
+    {% endwith %}
+    {% if leave.status == 'pending' %}
+    <a href={% url 'approve' 'l' leave.pk %}
+    <button class="btn btn-success" style="float: left" id='accept'>
+        Accept  <i class="glyphicon glyphicon-ok"></i>
+    </button>
+    </a>
+    <a href={% url 'reject' 'l' leave.pk %}
+    <button type="submit" class="btn btn-danger" style="float: right" >
+       Reject  <i class="glyphicon glyphicon-remove"></i>
+    </button>
+    </a>
+    {% elif leave.status == 'granted'%}
+    
+    <a href={% url 'reject' 'l' leave.pk %}
+    <button type="submit" class="btn btn-danger" style="float: right" >
+       Reject  <i class="glyphicon glyphicon-remove"></i>
+    </button>
+    </a>
+    {% elif leave.status == 'rejected'%}
+    <a href={% url 'approve' 'l' leave.pk %}
+    <button class="btn btn-success" style="float: left" id='accept'>
+        Accept  <i class="glyphicon glyphicon-ok"></i>
+    </button>
+    </a>
+    {% elif leave.status == 'on_leave'%}
+    <p> Student is on leave . Actual out date {{leave.actual_out_date|date:'M d(D),Y'}}</p>
+    {% elif leave.status == 'completed'%}
+    <p> Student has completed his/her leave . Actual out date {{leave.actual_out_date|date:'M d(D),Y'}}, Actual in date {{leave.actual_in_date}}</p>
+    {% elif leave.status == 'delayed'%}
+    <p>Student is still on leave even after the in date is crossed Actual out date {{leave.actual_out_date}}</p>
+    {% elif leave.status == 'expired'%}
+    <p style='display:inline-block'>This leave is expired as it is not utilised by the student</p>
+    {% endif %}
+
+    {% with count.leaves_this_month|sub:4 as count %}<br><br>
+  <b><p style='font-size:15px;{% if count == 3 or count == 4 %}color:green{%elif count == 1 or count == 2 %}color:orange{%else%}color:red{% endif %}'>Leaves remaining this month for {{leave.user.id}}- {{count}}</p></b>
+  {% endwith %}
+</div>
+
+<script>
+
+    function add(x){
+        button = document.getElementById(x);
+        ta = document.getElementById('input')
+        if (button.bool == 'False'){
+            ta.value = ta.value.replace(button.getAttribute('data-value'), '')
+            button.bool = 'True';
+            document.getElementById('add'+x).classList.add('fa-plus')
+            document.getElementById('add'+x).classList.remove('fa-minus')
+            button.classList.add('remove')
+            button.classList.remove('remove')
+        }
+        else{
+            ta.value += ' '+button.getAttribute('data-value');
+            button.bool = 'False';
+            document.getElementById('add'.concat(x)).classList.remove('fa-plus')
+            document.getElementById('add'.concat(x)).classList.add('fa-minus')
+            button.classList.add('remove')
+
+        }
+        if (!ta.value.replace(/\s/g, '').length){
+          ta.value = ''; 
+        }
+    }
+</script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script>
+        $(document).ready(function(){
+            console.log('working docuent')
+        $("#accept").click( function(){
+            console.log('working')
+            console.log($('textarea#input').val())
+                	var url_mask = '{% url "approve" "l" leave.pk 1234 %}'.replace(/1234/, $('textarea#input').val());
+                	location.replace(url_mask);
+        });
+        });
+</script>
+
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load index %}
+{% block header %}
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-right ml-lg-auto">
+			 <li class="nav-item active">
+                <a class="nav-link btn " href="/publicholiday">
+                  <span class="glyphicon glyphicon-plus">&thinsp;</span> PublicHoliday</span></a
+                >
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="#"
+                  ><span class="glyphicon glyphicon-user">&thinsp;</span> Team</span></a
+                >
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="/logout"
+                  ><span class="glyphicon glyphicon-log-out">&thinsp;</span> LogOut</span></a
+                >
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn   adminid" href="#">
+                  <span style="font-size: 20px"> {{user}}</span></a
+                >
+              </li>
+            </ul>
+{%endblock%}
+{% block content %}
+	<div style='display:flex;justify-content:space-around;'>
+	<p style='font-size:20px;padding-right:45%'><b>{{g|capfirst}} Leaves:</b></p>
+	<form action="{% url 'admin_home' %}" method="get" id='myform' label='Filter'>
+    <select name="featured" id='yourid'>
+		{% for f in filters %}
+		{% if g == f or g == 'on_leave' and f == 'on leave'%}
+		<option value="{{f}}" selected/>{{f|capfirst}}</option>
+		{% else %}
+        <option value="{{f}}"/>{{f|capfirst}}</option>
+		{% endif %}
+		{% endfor %}
+    </select>   <!-- ADDED THIS LINE -->   <!-- DELETE name="featured" FROM ORIGINAL CODE -->  
+	</form>
+	</div>
+
+	<div class="center" style="padding-top: 20px;">
+  			            
+  		<table class="table table-striped sticky-header">
+  			<thead>
+      			<tr>
+                <th>#</th>
+			    <th>Id no.</th>
+        		<th>Reason</th>
+                <th>Description</th>
+                <th>Out date </th>
+                <th>In date</th>
+        		<th>Proof</th>
+				<th>Phone No.</th>
+				<th>Parent Phn No.</th>
+				{% if g == 'pending' %}
+        		<th>Action</th>
+        		<th>Action</th>
+				{% elif g == 'granted' or 'rejected' %}
+				<th>Action</th>
+				{% endif %}
+				<th></th>
+				<th>Remark</th>
+      			</tr>
+    		</thead>
+    		<tbody class="actions">
+        {% for l in leaves %}
+      			<tr>
+				<td style='width:10px'>{{forloop.counter}}</td>
+				<td  id='reason'>
+					{% if l.is_emergency is True %}
+						<a href='#'  style='color:red'>{{l.user.id}}<span style='background:#ff4d4d;color:white'>Emergency request</span></a>
+					{% else %}
+						<span>
+						{{l.user.id}}
+						</span>
+					{% endif %}
+					{% if l.user.gender == 'male' %}
+					<i class="fa fa-male"></i>
+					{% else %}
+					<i class="fa fa-female"></i>
+					{% endif %}
+				</td>
+        		<td><b>{{l.reason}}</b></td>
+              	<td id='reason'>
+				  	<a href='#'>{{l.description|truncatechars:70}}
+					  	<span>{{l.description}}</span>
+					</a>
+				</td>
+              	<td>{{l.out_date|date:'M d(D),Y'}}</td>
+              	<td>{{l.in_date|date:'M d(D),Y'}}</td>
+        		<td>{% if l.proof %}<a href="{{ l.proof.url}}" target='_blank' style='color:blue'>View</a>
+					{% else %}<p>&nbsp_</p>{% endif %}</td>
+				<td>{{pnb|index:forloop.counter0}}</td>
+				<td>{{ppnb|index:forloop.counter0}}</td>
+				{% if g == 'pending' %}
+        		<td id="Accept"><a href="{% url 'approve' 'l' l.pk %}">Accept</td>
+        		<td id="Reject"><a href="{% url 'reject' 'l' l.pk %}">Reject</td>
+				{% elif g == 'granted' %}
+        		<td id="Reject"><a href="{% url 'reject' 'l' l.pk %}">Reject</td>
+				{% elif g == 'rejected' %}
+        		<td id="Accept"><a href="{% url 'approve' 'l' l.pk %}">Accept</td>
+				{% else %}
+				<td>_</td> 
+				{% endif %}
+				<td style='width:5px'><a href="{% url 'leaveview' l.id %}"><Button class='btn btn-sm'><i class="glyphicon glyphicon-eye-open"></i></Button></a></td>
+              	<td id='reason'>
+				  	<a href='#'>{{l.remark|truncatechars:15}}
+					  	<span>{{l.remark}}</span>
+					</a>
+				</td>
+      			</tr>
+      		
+      {% endfor %}
+		</table>
+	</div>
+<p style='font-size:20px;padding :1% 0% 0% 10%;'><b>Outings:</b></p>
+
+	<div class="center" style="padding-top: 20px;">
+  			            
+  		<table class="table table-striped">
+  			<thead>
+				<tr>
+				<th>#</th>
+				<th>Id no.</th>
+				<th>Reason</th>
+				<th>Date</th>
+				<th>Out time</th>
+				<th>In time</th>
+				<th>Action</th>
+				<th>Action</th>
+				</tr>
+    		</thead>
+    		<tbody class="actions">
+			{% for o in outings %}
+			<tr>
+			<td style='width:10px'>{{forloop.counter}}</td>
+			<td>{{o.user.id}}</td>
+			<td>{{o.reason}}</td>
+			<td>{{o.date|date:'M d,Y'}}</td>
+			<td>{{o.out_time}}</td>
+			<td>{{o.in_time}}</td>
+        	<td id="Accept"><a href="{% url 'approve' 'o' o.pk %}">Accept</td>
+        	<td id="Reject"><a href="{% url 'reject' 'o' o.pk %}">Reject</td>
+			</tr>
+			{% endfor %}
+			
+			</tbody>
+      		
+		</table>
+	</div>
+	{% load static %}
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+	<script>
+	$(document).ready(function(){
+		$('#yourid').change(function(){
+			console.log(this)
+			$('#myform').submit();
+		});
+	});
+
+	</script>
+{%endblock%}

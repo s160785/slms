@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django-bootstrap4 = "*"
+django-shortcuts = "*"
+django-celery = "*"
+django-widget-tweaks = "*"
+schedule = "*"
+django-bootstrap-datepicker-plus = "*"
+whitenoise = "*"
+
+[requires]
+python_version = "3.8"

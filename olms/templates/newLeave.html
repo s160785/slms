@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{%load bootstrap4%}
+{% bootstrap_css %}         {# Embed Bootstrap CSS #}
+{% bootstrap_javascript jquery='full' %} 
+{%block extrahead%}
+{% load static %}
+{% load index %}
+<script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+{{ form.media }}
+{% endblock %}
+{%block header %}
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="#"
+                  ><span class="glyphicon glyphicon-user"> Team</span></a
+                >
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="/logout"
+                  ><span class="glyphicon glyphicon-log-out"> Logout</span></a
+                >
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn   adminid" href="#">
+                  <span style="font-size: 17px"> {{user.profile.id}}</span></a
+                >
+              </li>
+            </ul>
+            {% endblock %}
+{% block content %}
+
+<h2 align='center'> New Leave </h2>
+{% with counts.leaves_this_month|sub:4 as count %}
+<b><p style='font-size:15px;{% if count == 3 or count == 4 %}color:green{%elif count == 1 or count == 2 %}color:orange{%else%}color:red{% endif %}' align='center'>Leaves remaining this month - {{count}}</p></b>
+{% endwith %}
+<div class='box'>
+<form action='newleave' method='post' enctype="multipart/form-data">
+{{form.media}}
+{% csrf_token %}
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p class='error'> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+{% bootstrap_form form %} 
+<Button type='submit' class='btn btn-success'>Apply</Button>
+</div>
+{%endblock%}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load index %}
+{% load static %}
+{%block header%}
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="profile"
+                  ><span class="glyphicon glyphicon-user">&thinsp;</span> Profile</a
+                >
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="/logout"
+                  ><span class="glyphicon glyphicon-log-out">&thinsp;</span> Logout</a
+                >
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn   adminid" href="#">
+                  <span style="font-size: 17px"> {{user.profile.id}}</span></a
+                >
+              </li>
+            </ul>
+            {%endblock%}
+
+{% block content %}
+    {% if messages %}
+    {% for m in messages %}
+    {% if m.tags != 'info' %}
+      <p class='main alert alert-{% if m.tags == "error" %}danger{% else %}{{ m.tags }}{% endif %}' align='center' width='30px'>{{m}}</p>
+      {% else %}
+         <a href='/undo/{{m}}'>Undo</a>
+      {% endif %}
+   {% endfor %}
+   {% endif %}
+<div  class="new">
+<div style="font-size:20px;margin-left: 10%;flex:2;"x>
+  <p style="margin-bottom:0;"><b>Leaves:</b></p>
+    {% with counts.leaves_this_month|sub:4 as count %}
+<span style='font-size:15px;{% if count == 3 or count == 4 %}color:green{%elif count == 1 or count == 2 %}color:orange{%else%}color:red{% endif %}'>Leaves remaining this month - {{count}}</span>
+{% endwith %}
+</div>
+  <Button onClick='javascript: location.replace("newleave")' style='max-height:40px;margin-top:1%'><a href='newleave'><span class='glyphicon glyphicon-plus'></span> New Leave</a></Button>
+</div>
+<div class='center' >
+<table class="table table-striped">
+  			<thead>
+					<tr>
+				<th>#</th>
+				<th>Reason</th>
+				<th>Description</th>
+				<th>Out date </th>
+				<th>In date</th>
+				<th>Proof</th>
+				<th>Status</th>
+				<th>Remark</th>
+      			</tr>
+    		</thead>
+    		<tbody class="actions">
+        {% for l in leaves %}
+      		<tr>
+				<td style='width:20px'>{{forloop.counter}}</td>
+				<td>
+				{% if l.is_emergency is True %}
+				<b style='color:#ff3333'>{{l.reason}}</b>
+				{% else %}
+				<b>{{l.reason}}</b>
+				{% endif %}
+				</td>
+				<td id='reason'><a href='#'>{{l.description|truncatechars:70}}<span>{{l.description}}</span></a></td>
+				<td>{{l.out_date|date:'M d,Y'}}</td>
+				<td>{{l.in_date|date:'M d,Y'}}</td>
+				<td>{% if l.proof %}<a href="{{ l.proof.url}}" target='_blank'>View</a>{% endif %}</td>
+				<td>{{l.status|capfirst}}</td>
+				<td>{{l.remark}}</td>
+				<td style='width:10px'><a href={% url 'del' 'l' l.id %} class='glyphicon glyphicon-trash' style='color:red'></a></td>
+      		</tr>
+      {% endfor %}
+		</table>
+</div>
+<div class='new'>
+<div style="font-size:20px;margin-left: 10%;flex:2;"x>
+  <p style="margin-bottom:0;"><b>Outings:</b></p>
+      {% with counts.outings_this_month|sub:4 as count %}
+<span style='font-size:15px;{% if count == 3 or count == 4 %}color:green{%elif count == 1 or count == 2 %}color:orange{%else%}color:red{% endif %}'>Outings remaining this month - {{count}}</span>
+{% endwith %}
+</div>
+	<Button style='margin-top:1%;max-height:40px' onClick='javascript: location.replace("newouting")'><a href='newouting'><span class='glyphicon glyphicon-plus'></span> New Outing</a></Button>
+</div>
+<div class='center' >
+	<table class="table table-striped">
+  		<thead>	
+      	<tr>
+            <th>#</th>
+        	<th>Reason</th>
+        	<th>Date</th>
+            <th>Out time</th>
+            <th>In time</th>
+            <th>Status</th>
+      	</tr>
+    	</thead>
+    	<tbody class="actions">
+			{% for o in outings %}
+			<tr>
+			<td style='width:10px'>{{forloop.counter}}</td>
+			<td>{{o.reason}}</td>
+			<td>{{o.date|date:'M d,Y'}}</td>
+			<td>{{o.out_time}}</td>
+			<td>{{o.in_time}}</td>
+			<td>{{o.status|capfirst}}</td>
+			<td style='width:10px'><a href={% url 'del' 'o' o.id %} class='glyphicon glyphicon-trash' style='color:red'></a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+      		
+	</table>
+</div>
+{% endblock content %}

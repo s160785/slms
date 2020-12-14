@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial;
+        font-size: 17px;
+        background-color: #fea918;
+        overflow: hidden;
+      }
+
+      .content {
+        position: fixed;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: #f1f1f1;
+        width: 100%;
+        padding: 20px;
+      }
+
+      #myBtn {
+        width: 200px;
+        font-size: 18px;
+        padding: 10px;
+        border: none;
+        background: #000;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      #myBtn:hover {
+        background: #ddd;
+        color: black;
+      }
+
+      .crop {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+      <img class='crop' src={% static "backgrounds/403-error.jpg" %}/>
+    </div>
+    <div class="content">
+      <h1>SLMS is forbidden for you as you are off campus.</h1>
+      <p>
+        Go and scan your id card aadhar barcode at the main gate securtiy if you didn't while entering the campus.
+        <br>
+        If you are
+        viewing this page after even after scanning your id card then report this to olms admin at
+        olmsadmin@rguktsklm.ac.in
+      </p>
+      <p>
+        This page will be redirected in &nbsp
+        <span style="font-size: 30px" id="count">5</span> &nbsp seconds
+      </p>
+      <button id="myBtn" onclick="myFunction()">Pause</button>
+    </div>
+  </body>
+  <script>
+    for (i = 1000; i < 5000; i += 1000) {
+      setTimeout(() => {
+        document.getElementById("count").innerHTML -= 1;
+      }, i);
+    }
+    setTimeout(function () {
+      location.replace("/logout");
+      console.log("I am working"); // Do something after 5 seconds
+    }, 5000);
+  </script>
+ 
+</html>

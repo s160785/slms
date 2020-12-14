@@ -1,0 +1,477 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  .container {
+    position: absolute;
+    width: 1440px;
+    height: 100vh;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .left-panel {
+    position: relative;
+    width: 175px;
+    height: 100%;
+    background: #5fbd7b;
+    border-radius: 15px;
+  }
+
+  .left-panel ul {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    top: 20px;
+    height: 300px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+  }
+
+  .left-panel ul li {
+    list-style-type: none;
+  }
+
+  .left-panel ul li a {
+    text-decoration: none;
+    color: black;
+    letter-spacing: 1px;
+    font-weight: normal;
+    font-size: 18px;
+  }
+
+  .right-panel {
+    position: relative;
+    width: 1265px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.3s ease-in;
+  }
+
+  .main-card {
+    position: absolute;
+    background: rgba(233, 216, 216, 0.37);
+    border-radius: 15px;
+    min-width: 100%;
+    height: calc(100vh - 30px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .main-left {
+    position: relative;
+    width: 500px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .main-left-top {
+    position: relative;
+    width: 500px;
+    height: 200px;
+    background: #e4dada;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  tr {
+    max-width: 45px;
+    color: black;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 10px;
+    letter-spacing: 1px;
+  }
+
+  span {
+    position: relative;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: 1px;
+  }
+
+  .main-left-bottom {
+    position: relative;
+    width: 500px;
+    height: 400px;
+    background: #e4dada;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .main-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background: #e4dada;
+    width: 500px;
+    height: 650px;
+    border-radius: 30px;
+  }
+
+  .main-right img {
+    position: absolute;
+    left: 175px;
+    top: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 420px) {
+    body {
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-around;
+      position: relative;
+      width: 100vw;
+      height: 1000px;
+    }
+    .left-panel {
+      position: absolute;
+      top: 2%;
+      left: 0;
+      height: 40px;
+      width: 420px;
+      background: #5fbd7b;
+      border-radius: 15px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .left-panel ul {
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 420px;
+      height: 40px;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .left-panel ul li {
+      list-style-type: none;
+    }
+    .left-panel ul li a {
+      text-decoration: none;
+      text-transform: uppercase;
+      color: black;
+      font-weight: normal;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .right-panel {
+      position: absolute;
+      top: 15%;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-around;
+      height: 100vh;
+      width: 100vw;
+    }
+    .main-card {
+      position: relative;
+      background: rgba(233, 216, 216, 0.37);
+      border-radius: 15px;
+      width: 100vw;
+      height: 1200px;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .main-left {
+      position: relative;
+      width: 400px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .main-left-top {
+      position: relative;
+      width: 400px;
+      height: 200px;
+      background: #e4dada;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+    tr label {
+      max-width: 45px;
+      color: black;
+      font-weight: normal;
+      font-size: 1px;
+      line-height: 10px;
+      letter-spacing: 1px;
+    }
+
+    span {
+      position: relative;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 5px;
+      letter-spacing: 1px;
+    }
+
+    .main-left-bottom {
+      position: relative;
+      width: 400px;
+      height: 250px;
+      background: #e4dada;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    .main-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      background: #e4dada;
+      width: 400px;
+      height: 400px;
+      border-radius: 15px;
+    }
+
+    .main-right img {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%);
+      margin-top: 10px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+  }
+  @media (max-width: 768px) {
+    body {
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .left-panel {
+      position: relative;
+      width: 100vw;
+      height: 60px;
+    }
+
+    .left-panel ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: flex-start;
+      position: relative;
+      margin-top: 1px;
+    }
+
+    .right-panel {
+      position: relative;
+      width: 100vw;
+      height: calc(100vh - 15vh);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .main-card {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .main-left {
+      width: 100vw;
+      height: 600px;
+    }
+
+    .main-right {
+      height: 500px;
+      width: 650px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .main-right img {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%);
+      margin-top: 10px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    .main-left-top {
+      height: 200px;
+      width: 650px;
+    }
+    .main-left-bottom {
+      height: 300px;
+      width: 650px;
+    }
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <ul>
+        <li><a href="#">profile</a></li>
+        <li><a href="#">outings</a></li>
+        <li><a href="#">leaves</a></li>
+        <li><a href="#">settings</a></li>
+      </ul>
+    </div>
+    <div class="right-panel">
+      <div class="main-card">
+        <div class="main-left">
+          <div class="main-left-top">
+            <tr>
+              <td>
+                <label for="year">
+                  Year / Branch : <span id="year">E-3 / CSE</span></label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="hostel">
+                  Year / Branch : <span id="hostel">I-2 /21(A)</span></label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="gender">
+                  Year / Branch : <span id="male">Male</span></label
+                >
+              </td>
+            </tr>
+          </div>
+          <div class="main-left-bottom">
+            <tr>
+              <td>
+                <label for="aadhar">
+                  Aadhar : <span id="aadhar">898661622412</span></label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="parentname">
+                  Parent Name : <span id="parentname"></span
+                ></label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="parentnumber">
+                  Parent Number : <span id="parentnumber"></span
+                ></label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="address">
+                  Address : <span id="address"></span
+                ></label>
+              </td>
+            </tr>
+          </div>
+        </div>
+        <div class="main-right">
+          <div class="image">
+            <img src="profile.png" alt="Image" />
+          </div>
+          <tr>
+            <td>
+              <label for="name"> Name : <span id="sname"></span></label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="id"> Id No. : <span id="id"></span></label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="phonenumber">
+                Phone Number : <span id="phonenumber"></span
+              ></label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="email"> Gmail : <span id="gmail"></span></label>
+            </td>
+          </tr>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock content %}

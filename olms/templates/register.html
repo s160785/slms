@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {%load bootstrap4%} 
+{% block baseheader %}
+{% endblock baseheader %}
+{%block content%}
+<div class="title">
+  <h1 style="font-family: 'Exo 2'">STUDENT LEAVE MANAGEMENT SYSYTEM</h1>
+  <h2 align='center' style="font-family: 'Exo 2'"> Student Registration </h2>
+</div>
+</header>
+<div class="box" style='margin-bottom:20px'>
+  <form action="{{action}}" method="post">
+    {{form.media}} {% csrf_token %} {% if form.errors %} {% for field in form %}
+    {% for error in field.errors %}
+    <p class="error">{{ error }}</p>
+    {% endfor %} {% endfor %} {% endif %} {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary">
+      {{button}}
+    </button>
+    <p align="left" style='margin-top:10px;'> Registration Page {{i}} of 2</p>
+  </form>
+</div>
+{%endblock%}

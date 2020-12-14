@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%load bootstrap4%}
+{% bootstrap_css %}         {# Embed Bootstrap CSS #}
+{% bootstrap_javascript jquery='full' %} 
+{%block extrahead%}
+{% load static %}
+<script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+{{ form.media }}
+{% endblock %}
+{%block header %}
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="#"
+                  ><span class="glyphicon glyphicon-user">&thinsp;</span> Team</a
+                >
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link btn  " href="/logout"
+                  ><span class="glyphicon glyphicon-log-out">&thinsp;</span> LogOut</a
+                >
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn   adminid" href="#">
+                  <span style="font-size: 20px"> {{user}}</span></a
+                >
+              </li>
+            </ul>
+{% endblock %}
+{% block content %}
+<h2 align='center'>Public Holiday({{user.profile.branch|upper}}-{{user.profile.year|upper}})</h2>
+<div class='box'>
+<form action='publicholiday' method='post' enctype="multipart/form-data">
+{{form.media}}
+{% csrf_token %}
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p class='error'> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+{% bootstrap_form form %} 
+<Button type='submit' class='btn btn-success'>Submit</Button>
+</div>
+{%endblock%}

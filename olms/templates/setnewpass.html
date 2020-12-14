@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% load bootstrap4 %} {% block baseheader %}
+<!---->
+<div class="title">
+  <h1 style="font-family: 'Exo 2'">STUDENT LEAVE MANAGEMENT SYSYTEM</h1>
+</div>
+{% endblock baseheader %} {% block content %}
+<div>
+  <h3 align="center"><b>Set New Password</b></h3>
+  <div class="box" style="margin-top: 200px">
+    {% if form.error %} {% for f in form %} {% for err in f.errors %}
+    <p>{{err}}</p>
+    {% endfor %} {% endfor %} {% endif %}
+    <form action="setnewpassword" method="post">
+      {% csrf_token %} {% bootstrap_form form %}
+      <button class="btn btn-primary" type="submit">Change</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

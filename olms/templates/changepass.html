@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% load bootstrap4 %} {% block header %}
+
+          <li class="nav-item active">
+            <a class="nav-link btn btn-sm" href="#"
+              ><span class="glyphicon glyphicon-user">&thinsp;</span> Team</span></a
+            >
+          </li>
+
+          <li class="nav-item active">
+            <a class="nav-link btn btn-sm" href="/logout"
+              ><span class="glyphicon glyphicon-log-out">&thinsp;</span> LogOut</span></a
+            >
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link btn btn-sm adminid" href="#">
+              <span style="font-size: 20px"> {{user}}</span></a
+            >
+          </li>
+        </ul>
+        {% endblock %} {% block content %}
+        <div class="box">
+          <h3><b>Change Password</b></h3>
+          <form action="changepassword" method="post">
+            {% csrf_token %} {% bootstrap_form form %}
+            <button class="btn btn-primary" type="submit">Change</button>
+          </form>
+        </div>
+        {% endblock %}
+      </div>
+    </nav>
+  </div>
+</header>

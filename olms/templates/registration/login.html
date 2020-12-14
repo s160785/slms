@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+{% load static %} {% load widget_tweaks %}
+<html lang="en">
+  <head>
+    <title>Login V3</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/bootstrap.min.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/font-awesome.min.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/fonts/iconic/css/material-design-iconic-font.min.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/vendor/animate/animate.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/vendor/css-hamburgers/hamburgers.min.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/vendor/animsition/css/animsition.min.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/vendor/select2/select2.min.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/vendor/daterangepicker/daterangepicker.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/login/css/util.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{%static 'css/login/css/main.css'%}"
+    />
+    <!--===============================================================================================-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .heading {
+        font-size: 80px;
+        display: flex;
+        flex-direction: column;
+        font-family: "Alfa Slab One", cursive;
+      }
+      .alert-danger {
+        color: red;
+      }
+
+      .link--kumya {
+        font-size: 6em;
+        overflow: hidden;
+        padding: 10px 10px 0;
+        line-height: 1;
+        color: #242424;
+      }
+
+      .link--kumya:hover {
+        color: #242424;
+      }
+
+      .link--kumya::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        background: #242424;
+        -webkit-transform: translate3d(101%, 0, 0);
+        transform: translate3d(101%, 0, 0);
+        -webkit-transition: -webkit-transform 0.5s;
+        transition: transform 0.5s;
+        -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+        transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+      }
+
+      .link--kumya:hover::after {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+
+      .link--kumya span {
+        display: block;
+        position: relative;
+      }
+
+      .link--kumya span::before {
+        content: attr(data-letters);
+        position: absolute;
+        color: #fff;
+        left: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 0%;
+        -webkit-transition: width 0.6s;
+        transition: width 0.5s;
+        -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+        transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+      }
+
+      .link--kumya:hover span::before {
+        width: 100%;
+      }
+
+      .link {
+        outline: none;
+        text-decoration: none;
+        font-size: 15vh;
+        line-height: 1;
+        font-color: black;
+        display: inline-block;
+        overflow-y: hidden !important;
+      }
+      * {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;
+      }
+      *::-webkit-scrollbar {
+        display: none;
+      }
+      @media screen and (max-width: 1870px) {
+        .link {
+          font-size: 7vw;
+        }
+      }
+      @media screen and (max-width: 1675px) {
+        .link {
+          font-size: 6vw;
+        }
+      }
+      @media screen and (max-width: 1370px) {
+        .link {
+          font-size: 5vw;
+        }
+      }
+      @media screen and (max-width: 1110px) {
+        .link {
+          font-size: 55.5px;
+        }
+      }
+      @media screen and (max-width: 640px) {
+        .link {
+          font-size: 6vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="limiter">
+      <div
+        class="container-login100"
+        style="background-image: url('{% static 'images/bg-02.jpeg'%}')"
+      >
+        <div
+          class="p-b-100 p-t-27 link link--kumya heading"
+          style="margin: 0 50px"
+          align="center"
+        >
+          <span data-letters="STUDENT">STUDENT</span>
+          <span data-letters="LEAVE">LEAVE</span>
+          <span data-letters="MANAGEMENT">MANAGEMENT</span>
+          <span data-letters="SYSTEM"> SYSTEM</span>
+        </div>
+        <div class="wrap-login100">
+          <h3 class="login100-form-title p-b-20">RGUKT SKLM</h3>
+          <span class="login100-form-logo">
+            <img src="{% static 'images/logo2.png'%}" width="60px" />
+          </span>
+
+          <span class="login100-form-title p-b-34 p-t-27">
+            <b>SLMS</b> Log in
+          </span>
+
+          <form class="login100-form validate-form" method="post">
+            {% if form.errors %} {% for field in form %}
+            <!-- for errors-->
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endif %} {% csrf_token %}<br />
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Enter username"
+            >
+              {{form.username|add_class:"input100"}}
+
+              <span class="focus-input100" data-placeholder="&#xf207;"></span>
+            </div>
+
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Enter password"
+            >
+              {{form.password|add_class:"input100"}}
+              <span class="focus-input100" data-placeholder="&#xf191;"></span>
+            </div>
+
+            <div class="contact100-form-checkbox">
+              <a class="txt1" href="/forgotpassword"> Forgot Password? </a>
+            </div>
+
+            <div class="container-login100-form-btn">
+              <button class="login100-form-btn">Login</button>
+            </div>
+
+            <div class="text-center p-t-90">
+              <a class="txt1" href="/register"> Click me to register </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+  </body>
+</html>

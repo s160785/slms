@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% load bootstrap4 %} {% block content %}
+
+<div class="title">
+  <h1 style="font-family: 'Exo 2'">STUDENT LEAVE MANAGEMENT SYSYTEM</h1>
+</div>
+<h2 align="center"><b>Logout Required</b></h2>
+<div class="div">
+  <span>Forgot password page requires logging out</span>
+  <div>
+    <a href="/logout"
+      ><button class="btn btn-danger">
+        <span class="glyphicon glyphicon-log-out"> Logout</span>
+      </button></a
+    >
+    or
+    <a href="/home"
+      ><button class="btn btn-primary">
+        Go back <span class="glyphicon glyphicon-home"> Home</span>
+      </button></a
+    >
+  </div>
+</div>
+{% endblock %}
